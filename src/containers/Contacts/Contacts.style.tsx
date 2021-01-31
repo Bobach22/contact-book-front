@@ -76,8 +76,12 @@ export const ButtonWrapper=styled("div",({
   width:"auto"
 }));
 
-export const HeaderWrapper=styled("div",({
+export const HeaderWrapper=styled("div",({$theme})=>({
   display: "flex",
+  [$theme.mediaQuery.medium]:{
+    flexDirection:"row"
+  },
+  flexDirection:"column",
   width: "100%",
   justifyContent: "space-between",
 }))
