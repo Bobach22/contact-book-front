@@ -1,6 +1,6 @@
 
 /** API constants start */
-export const API_URL="http://localhost/contact-book/public/api"
+export const API_URL="https://contact-book-back.herokuapp.com/api/contacts"
 /** API constants end */
 
 /** Route constants start */
