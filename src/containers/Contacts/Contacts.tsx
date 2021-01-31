@@ -247,13 +247,12 @@ if(!isLoading){
     deleteContact(checkedId)
       .then((res) => {
         mutate().then(() =>{
-          setLoading(false)
           refreshIdList()
         });
         console.log(res);
       })
       .catch((err) => console.log(err.response))
-     
+      .finally(()=>setLoading(false))
   }
 
   function handleCheckbox(event: React.MouseEvent<HTMLInputElement>) {

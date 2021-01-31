@@ -108,7 +108,6 @@ const ContactForm: React.FC<any> = (props) => {
       .then((res) => {
         mutate()
           .then(() => {
-            setUpdating(false)
             closeModal();
           })
           .catch((err) => console.log(err));
@@ -124,7 +123,8 @@ const ContactForm: React.FC<any> = (props) => {
           console.log(errors);
         }
         console.log(err.response);
-      })
+            setUpdating(false)
+        }).finally(()=>setUpdating(false))
      
     
     console.log("data", formData);

@@ -1,6 +1,6 @@
 
 /** API constants start */
-export const API_URL="http://localhost:8000/api"
+export const API_URL="http://localhost/contact-book/public/api"
 /** API constants end */
 
 /** Route constants start */
