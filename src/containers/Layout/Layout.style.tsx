@@ -1,8 +1,11 @@
 import { styled } from "baseui";
 
-export const AppWrapper = styled("div", {
+export const AppWrapper = styled("div", ({$theme})=>({
   textAlign: "center",
   backgroundColor: "#EEEEEE",
-  padding: "100px",
+  [$theme.mediaQuery.small]:{
+     padding: "100px",  
+  },
+  padding:"10px",
   height:"100%"
-});
+}));
