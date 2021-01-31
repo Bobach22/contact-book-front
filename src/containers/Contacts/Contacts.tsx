@@ -16,17 +16,18 @@ import { Pagination } from "../../components/Pagination/Pagination";
 import { useLocation, useHistory } from "react-router-dom";
 // import { usePrevious } from "../../utils/use-previous";
 
-const EditContact: React.FC<{ data: IContact }> = ({ data }) => {
+const EditContact: React.FC<{ data: IContact,mutate:()=>Promise<any> }> = ({ data,mutate }) => {
   const [css, theme] = useStyletron();
   const dispatch = useModalDispatch();
   const openModal = React.useCallback(
     () =>
       dispatch({
         type: "OPEN_MODAL",
+        mutate:mutate,
         modalComponent: "CONTACT_UPDATE_FORM",
         data: data,
       }),
-    [dispatch, data]
+    [dispatch, data,mutate]
   );
 
   return (
@@ -117,10 +118,7 @@ function useQuery() {
 const Contacts: React.FC<any> = (props) => {
 
   const dispatch = useModalDispatch();
-  const openModal = React.useCallback(
-    () => dispatch({ type: "OPEN_MODAL",modalComponent:"CONTACT_FORM" }),
-    [dispatch]
-  );
+  
 
   const query = useQuery();
 
@@ -131,6 +129,11 @@ const Contacts: React.FC<any> = (props) => {
   const { contacts, isLoading, mutate, meta } = useContact(
     searchText,
     activePage
+  );
+
+const openModal = React.useCallback(
+    () => dispatch({ type: "OPEN_MODAL",mutate:mutate,modalComponent:"CONTACT_FORM" }),
+    [dispatch,mutate]
   );
 
   const [checkedId, setCheckedId] = React.useState<Array<number>>([]);
@@ -360,7 +363,7 @@ if(!isLoading){
                     <Emails emails={contact.emails} />
                   </StyledBodyCell>
                   <StyledBodyCell>
-                    <EditContact data={contact} />
+                    <EditContact data={contact} mutate={mutate}/>
                   </StyledBodyCell>
                 </div>
               ))

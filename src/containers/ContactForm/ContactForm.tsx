@@ -6,7 +6,7 @@ import {
   FormLabel,
 } from "../../components/FormFields/FormFields";
 import Input from "../../components/Input/Input";
-import { useModalDispatch } from "../../context/ModalContext";
+import { useModalDispatch,useModalState } from "../../context/ModalContext";
 import {
   Form,
   ModalTitleWrapper,
@@ -83,10 +83,9 @@ const ContactSchema = yup.object().shape({
 
 const ContactForm: React.FC<any> = (props) => {
   const [updating, setUpdating] = React.useState(false);
-  const { mutate } = useContact();
 
   const dispatch = useModalDispatch();
-  //   const data = useModalState("data");
+    const mutate = useModalState("mutate");
   const closeModal = React.useCallback(
     () => dispatch({ type: "CLOSE_MODAL" }),
     [dispatch]
@@ -106,13 +105,15 @@ const ContactForm: React.FC<any> = (props) => {
    
     addContact(formData)
       .then((res) => {
+        if(mutate){
         mutate()
-          .then(() => {
+          ?.then(() => {
             closeModal();
           })
           .catch((err) => console.log(err));
 
         console.log(res);
+        }
       })
       .catch((err) => {
         if (err.response.data.errors) {

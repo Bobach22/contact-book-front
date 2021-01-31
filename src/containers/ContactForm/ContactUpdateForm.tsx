@@ -72,10 +72,10 @@ const ContactSchema = yup.object().shape({
 
 const ContactUpdateForm: React.FC<any> = (props) => {
   const [updating, setUpdating] = React.useState(false);
-  const { mutate } = useContact();
 
   const dispatch = useModalDispatch();
   const data = useModalState("data");
+  const mutate=useModalState("mutate")
   const closeModal = React.useCallback(
     () => dispatch({ type: "CLOSE_MODAL" }),
     [dispatch]
@@ -95,6 +95,7 @@ const ContactUpdateForm: React.FC<any> = (props) => {
     if (data && data.id) {
       updateContact(formData, data.id)
         .then((res) => {
+          if(mutate){
           mutate()
             .then(() => {
               
@@ -103,6 +104,7 @@ const ContactUpdateForm: React.FC<any> = (props) => {
             .catch((err) => console.log(err));
 
           console.log(res);
+        }
         })
         .catch((err) => {
           if (err.response.data.errors) {

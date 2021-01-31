@@ -3,12 +3,14 @@ import { UseCreateContext } from './create-context';
 const initialState = {
   isOpen: false,
   modalComponent: null,
+  mutate:null,
   data: null,
 };
 
 type State = {
     isOpen:boolean
-    modalComponent:React.FunctionComponent<any>|null
+    modalComponent:React.FunctionComponent<any>|null,
+    mutate:(()=>Promise<any>)|null
     data:IContact|null
 };
 type Action = any;
@@ -20,6 +22,7 @@ function reducer(state: State, action: Action) {
         isOpen: true,
         modalComponent: action.modalComponent,
         data: action.data,
+        mutate:action.mutate
       };
     case 'CLOSE_MODAL':
       return {
@@ -27,6 +30,7 @@ function reducer(state: State, action: Action) {
         isOpen: false,
         modalComponent: null,
         data: null,
+        mutate:action.mutate
       };
     default:
       return state;
